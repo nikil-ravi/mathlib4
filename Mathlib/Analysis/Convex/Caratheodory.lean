@@ -6,6 +6,7 @@ Authors: Johan Commelin, Kim Morrison
 import Mathlib.Analysis.Convex.Combination
 import Mathlib.LinearAlgebra.AffineSpace.Independent
 import Mathlib.Tactic.FieldSimp
+import Mathlib.LinearAlgebra.FiniteDimensional
 
 /-!
 # Carathéodory's convexity theorem
@@ -180,3 +181,21 @@ theorem eq_pos_convex_span_of_mem_convexHull {x : E} (hx : x ∈ convexHull 𝕜
     · intro e _ hwe contra
       apply hwe
       rw [contra, zero_smul]
+
+/-- **Shapley–Folkman lemma** (real version).
+In a finite-dimensional real vector space of dimension `d`,
+any point in the Minkowski sum of convex hulls of a family of sets
+`X : ι → Set E` can be expressed as a sum of points `x i` such that
+at most `d` indices are taken from convex hulls, and all others
+are taken directly from `X i`. -/
+theorem shapley_folkman {E ι : Type*} {𝕜 : Type*}
+  [Field 𝕜] [AddCommGroup E] [Module 𝕜 E] [FiniteDimensional 𝕜 E]
+  [Fintype ι] [DecidableEq ι]
+  {X : ι → Set E} {y : E}
+  (hy : y ∈ ∑ i, convexHull 𝕜 (X i)) :
+  ∃ (x : ι → E) (S : Finset ι),
+    S.card ≤ finrank 𝕜 E ∧
+    (∀ i ∉ S, x i ∈ X i) ∧
+    (∀ i ∈ S, x i ∈ convexHull 𝕜 (X i)) ∧
+    y = ∑ i, x i :=
+sorry
