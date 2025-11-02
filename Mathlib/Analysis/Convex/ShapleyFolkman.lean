@@ -13,10 +13,28 @@ variable [Fintype ι] [DecidableEq ι]
 
 open scoped Pointwise BigOperators
 
+
 lemma mem_finset_sum_sets {\iota E : Type*} [DecidableEq \iota] [Add E]
   [Fintype \iota] (A : \iota → Set E) {y : E} :
   y ∈ (∑ i, A i) ↔ ∃ f : ι → E, (∀ i, f i ∈ A i) ∧ y = ∑ i, f i := by
-sorry
+  sorry
+
+
+/- Convex hull commutes with a finite Minkowski sum -/
+lemma convexHull_sum (X : ι → Set E) :
+  convexHull 𝕜 (∑ i, X i) = ∑ i, convexHull 𝕜 (X i) := by
+  sorry
+
+
+lemma caratheodory_decomposition: sorry
+
+
+
+lemma shapleyFolkman_rounding: sorry
+
+
+
+
 
 /-- Shapley-Folkman lemma
 
@@ -46,5 +64,11 @@ theorem shapley_folkman {X : \iota → Set E} {y : E}
     S.card ≤ Module.finrank 𝕜 E ∧
     (∀ i ∉ S, x i ∈ X i) ∧
     (∀ i ∈ S, x i ∈ convexHull 𝕜 (X i)) ∧
-    y = ∑ i, x i :=
-sorry
+    y = ∑ i, x i := by
+classical
+
+-- first, use convexHull_sum to move convex hull outside minkowski sum
+
+-- use caratheodory_decomposition to express y as a convex combination of finitely many points z j \in \sum i, X i
+
+-- (tbd)
