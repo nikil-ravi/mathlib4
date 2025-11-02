@@ -13,6 +13,10 @@ variable [Fintype ι] [DecidableEq ι]
 
 open scoped Pointwise BigOperators
 
+lemma mem_finset_sum_sets {\iota E : Type*} [DecidableEq \iota] [Add E]
+  [Fintype \iota] (A : \iota → Set E) {y : E} :
+  y ∈ (∑ i, A i) ↔ ∃ f : ι → E, (∀ i, f i ∈ A i) ∧ y = ∑ i, f i := by
+sorry
 
 /-- Shapley-Folkman lemma
 
@@ -36,9 +40,9 @@ subset `S: Finset ι` such that:
 * and `y = ∑ i, x i`.
 -/
 
-theorem shapley_folkman {X : ι → Set E} {y : E}
+theorem shapley_folkman {X : \iota → Set E} {y : E}
   (hy : y ∈ ∑ i, convexHull 𝕜 (X i)) :
-  ∃ (x : ι → E) (S: Finset ι),
+  ∃ (x : \iota \-> E) (S: Finset ι),
     S.card ≤ Module.finrank 𝕜 E ∧
     (∀ i ∉ S, x i ∈ X i) ∧
     (∀ i ∈ S, x i ∈ convexHull 𝕜 (X i)) ∧
